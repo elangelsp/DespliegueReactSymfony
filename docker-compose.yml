@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DockerfileFrontendACM
+    container_name: frontendACM
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./frontend:/app
+        - /app/node_modules
+    environment:
+        - CHOKIDAR_USEPOLLING=true # Activa polling para asegurar detección de cambios en Docker
+    networks:
+        - redwebACM
+  backend:
+    build:
+      context: ./backend
+      dockerfile: DockerfileBackendACM
+    container_name: backendACM
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - redwebACM
+  web:
+    build:
+      context: ./web
+      dockerfile: DockerfileWebACM
+    container_name: webACM
+    ports:
+      - "80:80" # si tienes problemas con el puerto 80 cambia el puerto externo aquí
+    networks:
+      - redwebACM
+networks:
+  redwebACM:
+    driver: bridge
