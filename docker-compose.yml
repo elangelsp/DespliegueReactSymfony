@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DockerfileFrontendRECUA
+    container_name: frontendRECUA
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Activa polling para asegurar detección de cambios en Docker
+    networks:
+      - redwebRECUA
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: DockerfileBackendRECUA
+    container_name: backendRECUA
+    command: bash -c "composer install && php -S 0.0.0.0:8000 -t public"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - redwebRECUA
+
+  web:
+    build:
+      context: ./web
+      dockerfile: DockerfileWebRECUA
+    container_name: webRECUA
+    ports:
+      - "80:80" # Si tienes problemas con el puerto 80, cambia el puerto externo aquí
+    networks:
+      - redwebRECUA
+
+networks:
+  redwebRECUA:
+    driver: bridge
