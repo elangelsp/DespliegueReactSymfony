@@ -7,7 +7,7 @@ class RECUAController
 #[Route('/api/recua', name: 'api_recua')]
 public function index(): Response
 {
-return new Response('Symfony de Nombre Completo Responde a la llamada de
+return new Response('Symfony de Angel Cabrera Martos Responde a la llamada de
 React');
 }
 }
