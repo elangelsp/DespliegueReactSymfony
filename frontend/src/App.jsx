@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 function App() {
  const [message, setMessage] = useState('');
  useEffect(() => {
- fetch('/api/RECUA')
+ fetch('/api/recua')
  .then((response) => response.text())
  .then((data) => setMessage(data));
  }, []);

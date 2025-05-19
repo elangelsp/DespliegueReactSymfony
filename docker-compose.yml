@@ -20,9 +20,9 @@ services:
       context: ./backend
       dockerfile: DockerfileBackendRECUA
     container_name: backendRECUA
-    command: bash -c "composer install && php -S 0.0.0.0:8000 -t public"
-    ports:
-      - "8000:8000"
+    command: php-fpm
+    expose:
+      - "9000"
     volumes:
       - ./backend:/app
     networks:
@@ -35,6 +35,10 @@ services:
     container_name: webRECUA
     ports:
       - "80:80" # Si tienes problemas con el puerto 80, cambia el puerto externo aquí
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
     networks:
       - redwebRECUA
 
