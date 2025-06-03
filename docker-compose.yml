@@ -36,6 +36,9 @@ services:
     container_name: webACM
     ports:
       - "80:80" # si tienes problemas con el puerto 80 cambia el puerto externo aquí
+    depends_on:
+      - frontend
+      - backend
     networks:
       - redwebACM
 
